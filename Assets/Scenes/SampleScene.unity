@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameData: {fileID: 600302575}
+  _personsCount: 10
 --- !u!4 &600302577
 Transform:
   m_ObjectHideFlags: 0

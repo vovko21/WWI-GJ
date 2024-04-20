@@ -1,15 +1,13 @@
-using UnityEngine;
+using System.Collections.Generic;
 
-public class GameData : MonoBehaviour
+public class GameData : SingletonMonobehaviour<GameData>
 {
-    private DatabaseModel _database;
+    private List<PersonData> _personsData;
 
-    public DatabaseModel Database => _database;
+    public List<PersonData> PersonsData => _personsData;
 
-    public void Initialize(DatabaseModel database)
+    public void Initialize(List<PersonData> personsData)
     {
-        _database = database;
-
-        Debug.Log(_database.prisoners[0].number);
+        _personsData = personsData;
     }
 }

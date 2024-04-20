@@ -1,0 +1,15 @@
+{
+    "passports": 
+    [
+        {
+            "number": 1,
+            "fullname":"Олександр Григорович",
+            "birthDate": "1988-07-17"
+        },
+        {
+            "number": 2,
+            "fullname":"Іоан Соколов",
+            "birthDate": "1995-02-03"
+        }
+    ]
+}
