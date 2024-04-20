@@ -17,6 +17,6 @@ public class SceneEntryPoint : MonoBehaviour
         dataGenerator.Initialize(database, personsDeteils);
         var generatedPersons = dataGenerator.GeneratePersons(_personsCount);
 
-        _gameData.Initialize(generatedPersons);
+        _gameData.Initialize(generatedPersons, generatedPersons);
     }
 }
