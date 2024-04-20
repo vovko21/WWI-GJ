@@ -18,11 +18,5 @@ public class SceneEntryPoint : MonoBehaviour
         var generatedPersons = dataGenerator.GeneratePersons(_personsCount);
 
         _gameData.Initialize(generatedPersons, generatedPersons);
-
-        foreach ( var person in GameData.Instance.PersonsData)
-        {
-            Debug.Log(person.fullname);
-        }
-
     }
 }
