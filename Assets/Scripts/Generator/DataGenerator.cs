@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataGenerator
@@ -22,13 +23,18 @@ public class DataGenerator
         var persons = new List<PersonData>(count);
         for (int i = 0; i < count; i++)
         {
-            var passport = _database.passports[Random.Range(0, _database.passports.Count)];
-            var termOfImprisonment = _personsDeteils.termsOfImprisonment[Random.Range(0, _personsDeteils.termsOfImprisonment.Length)];
-            var reasonForImprisonment = _personsDeteils.reasonsForImprisonment[Random.Range(0, _personsDeteils.reasonsForImprisonment.Length)];
-            var description = _personsDeteils.descriptions[Random.Range(0, _personsDeteils.descriptions.Length)];
-            var reasonForDismissal = _personsDeteils.reasonsForDismissal[Random.Range(0, _personsDeteils.reasonsForDismissal.Length)];
+            PersonData person = new PersonData();
+            do
+            {
+                var passport = _database.passports[Random.Range(0, _database.passports.Count)];
+                var termOfImprisonment = _personsDeteils.termsOfImprisonment[Random.Range(0, _personsDeteils.termsOfImprisonment.Length)];
+                var reasonForImprisonment = _personsDeteils.reasonsForImprisonment[Random.Range(0, _personsDeteils.reasonsForImprisonment.Length)];
+                var description = _personsDeteils.descriptions[Random.Range(0, _personsDeteils.descriptions.Length)];
+                var reasonForDismissal = _personsDeteils.reasonsForDismissal[Random.Range(0, _personsDeteils.reasonsForDismissal.Length)];
 
-            var person = GeneratePerson(passport, termOfImprisonment, reasonForImprisonment, description, reasonForDismissal);
+                person = GeneratePerson(passport, termOfImprisonment, reasonForImprisonment, description, reasonForDismissal);
+            } 
+            while (!IsUnique(persons, person));
 
             persons.Add(person);
         }
@@ -107,6 +113,18 @@ public class DataGenerator
         }
 
         return person;
+    }
+
+    private bool IsUnique(List<PersonData> generatedPerson, PersonData person)
+    {
+        var matched = generatedPerson.FirstOrDefault(x => x.number == person.number);
+
+        if (matched != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private PassportModel GetImposterPassport()
