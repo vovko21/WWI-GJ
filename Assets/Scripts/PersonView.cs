@@ -7,6 +7,7 @@ public class PersonView : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Vector3 leftPosition;
+    private Vector3 centerPosition;
     private Vector3 rightPosition;
     private Vector3 targetPosition;
     private bool isMoving = false;
@@ -15,8 +16,8 @@ public class PersonView : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Define the left and right positions based on the current position of the sprite
-        leftPosition = transform.position;
+        leftPosition = new Vector3(leftPosition.x - distanceToMove, leftPosition.y, leftPosition.z);
+        centerPosition = transform.position;
         rightPosition = new Vector3(leftPosition.x + distanceToMove, leftPosition.y, leftPosition.z);
     }
 
@@ -36,15 +37,16 @@ public class PersonView : MonoBehaviour
     // Method to move sprite from left to center
     public void MoveLeftToCenter()
     {
+        transform.position = leftPosition;
+        targetPosition = centerPosition;
         isMoving = true;
-        targetPosition = rightPosition;
     }
 
     // Method to move sprite from center to right
     public void MoveCenterToRight()
     {
+        targetPosition = rightPosition;
         isMoving = true;
-        targetPosition = leftPosition;
     }
 
     public void SetPersonSprite(Sprite sprite)

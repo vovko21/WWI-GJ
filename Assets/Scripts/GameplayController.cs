@@ -7,7 +7,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
     [SerializeField] private PersonView _personView;
 
     private PersonData _currentPerson;
-    private List<PersonData> _error;
+    private List<PersonData> _errorPersons;
 
     private void OnEnable()
     {
@@ -21,6 +21,8 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
     public void Initialize()
     {
+        _errorPersons = new List<PersonData>();
+
         _currentPerson = DataGenerator.GetPersonData(GameData.Instance.PersonsData, GameData.Instance.ImpostersData);
 
         StartCoroutine(CallNextPerson());
@@ -44,7 +46,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
         if(isImposter)
         {
-            _error.Add(_currentPerson);
+            _errorPersons.Add(_currentPerson);
         }
 
         StartCoroutine(CallNextPerson());
@@ -56,7 +58,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
         if (!isImposter)
         {
-            _error.Add(_currentPerson);
+            _errorPersons.Add(_currentPerson);
         }
 
         StartCoroutine(CallNextPerson());
