@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameData : SingletonMonobehaviour<GameData>
 {
@@ -12,5 +13,17 @@ public class GameData : SingletonMonobehaviour<GameData>
     {
         _personsData = personsData;
         _impostersData = impostersData;
+    }
+
+    public bool IsImposter(PersonData person)
+    {
+        var imposter = ImpostersData.FirstOrDefault(x => x.number == person.number);
+
+        if(imposter != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

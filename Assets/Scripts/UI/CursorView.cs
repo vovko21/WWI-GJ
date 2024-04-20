@@ -38,4 +38,9 @@ public class CursorView : MonoBehaviour, IEventListener<HoverEvent>
         _image.sprite = cursor;
         _image.SetNativeSize();
     }
+
+    public void SetCursorActive(bool condition)
+    {
+        _image.gameObject.SetActive(condition);
+    }
 }

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class SceneEntryPoint : MonoBehaviour
 {
-    [SerializeField] private GameData _gameData;
+    [SerializeField] private GameplayController _gameplayController;
+    [SerializeField] private ComputerUI _computerUI;
     [SerializeField] private int _personsCount = 10;
 
     private void Start()
@@ -11,12 +12,19 @@ public class SceneEntryPoint : MonoBehaviour
 
         var database = jsonReader.LoadDatabase();
         var personsDeteils = jsonReader.LoadPersonsDeteils();
+        var imposterDatabase = jsonReader.LoadImpostersDatabase();
+        var imposterPersonsDeteils = jsonReader.LoadImpostersPersonsDeteils();
 
         DataGenerator dataGenerator = new DataGenerator();
 
-        dataGenerator.Initialize(database, personsDeteils);
+        dataGenerator.Initialize(database, personsDeteils, imposterDatabase, imposterPersonsDeteils);
         var generatedPersons = dataGenerator.GeneratePersons(_personsCount);
+        var impostersGeneratedPersons = dataGenerator.GenerateImposterPersons(generatedPersons);
 
-        _gameData.Initialize(generatedPersons, generatedPersons);
+        GameData.Instance.Initialize(generatedPersons, impostersGeneratedPersons);
+
+        _gameplayController.Initialize();
+
+        _computerUI.Initialize();
     }
 }
