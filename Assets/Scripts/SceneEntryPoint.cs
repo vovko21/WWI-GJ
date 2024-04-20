@@ -3,6 +3,7 @@ using UnityEngine;
 public class SceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private GameplayController _gameplayController;
+    [SerializeField] private ComputerUI _computerUI;
     [SerializeField] private int _personsCount = 10;
 
     private void Start()
@@ -23,5 +24,7 @@ public class SceneEntryPoint : MonoBehaviour
         GameData.Instance.Initialize(generatedPersons, impostersGeneratedPersons);
 
         _gameplayController.Initialize();
+
+        _computerUI.Initialize();
     }
 }

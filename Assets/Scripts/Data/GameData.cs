@@ -13,8 +13,6 @@ public class GameData : SingletonMonobehaviour<GameData>
     {
         _personsData = personsData;
         _impostersData = impostersData;
-
-        var a = 6;
     }
 
     public bool IsImposter(PersonData person)
