@@ -44,4 +44,9 @@ public class DataGenerator
 
         return person;
     }
+
+    public void GetPerson()
+    {
+
+    }
 }
