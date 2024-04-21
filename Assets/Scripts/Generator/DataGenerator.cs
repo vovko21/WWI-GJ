@@ -49,29 +49,29 @@ public class DataGenerator
         {
             var imposterPerson = new PersonData(person.number, person.fullname, person.birthDate, person.termOfImprisonment, person.reasonForImprisonment, person.description, person.reasonForDismissal);
 
-            var fieldIndex = Random.Range(0, 8);
+            var fieldIndex = Random.Range(0, 6);
             switch (fieldIndex)
             {
                 case 0:
-                    imposterPerson.number = GetImposterPassport().number;
+                    imposterPerson.number = GetImposterPassport(new PassportModel() { fullname = imposterPerson.fullname, number = imposterPerson.number }).number;
                     break;
                 case 1:
-                    imposterPerson.fullname = GetImposterPassport().fullname;
+                    imposterPerson.fullname = GetImposterPassport(new PassportModel() { fullname = imposterPerson.fullname, number = imposterPerson.number }).fullname;
                     break;
+                //case 2:
+                //    imposterPerson.birthDate = GetImposterPassport().birthDate;
+                //    break;
                 case 2:
-                    imposterPerson.birthDate = GetImposterPassport().birthDate;
+                    imposterPerson.termOfImprisonment = GetImposterTermOfImprisonment(imposterPerson.termOfImprisonment);
                     break;
                 case 3:
-                    imposterPerson.termOfImprisonment = GetImposterTermOfImprisonment();
+                    imposterPerson.reasonForImprisonment = GetImposterReasonForImprisonment(imposterPerson.reasonForImprisonment);
                     break;
                 case 4:
-                    imposterPerson.reasonForImprisonment = GetImposterReasonForImprisonment();
+                    imposterPerson.description = GetImposterDescription(imposterPerson.description);
                     break;
                 case 5:
-                    imposterPerson.description = GetImposterDescription();
-                    break;
-                case 6:
-                    imposterPerson.reasonForDismissal = GetImposterReasonForDismissals();
+                    imposterPerson.reasonForDismissal = GetImposterReasonForDismissals(imposterPerson.reasonForDismissal);
                     break;
                 default:
                     break;
@@ -98,23 +98,6 @@ public class DataGenerator
         return person;
     }
 
-    public static PersonData GetPersonData(List<PersonData> personsData, List<PersonData> impostersData)
-    {
-        PersonData person = null;
-
-        var pick = Random.Range(0, 2);
-        if (pick == 0)
-        {
-            person = personsData[Random.Range(0, personsData.Count)];
-        }
-        else
-        {
-            person = impostersData[Random.Range(0, impostersData.Count)];
-        }
-
-        return person;
-    }
-
     private bool IsUnique(List<PersonData> generatedPerson, PersonData person)
     {
         var matched = generatedPerson.FirstOrDefault(x => x.number == person.number);
@@ -127,27 +110,57 @@ public class DataGenerator
         return true;
     }
 
-    private PassportModel GetImposterPassport()
+    private PassportModel GetImposterPassport(PassportModel previous)
     {
-        return _imposterDatabase.passports[Random.Range(0, _imposterDatabase.passports.Count)];
+        PassportModel newData = null;
+        do
+        {
+            newData = _imposterDatabase.passports[Random.Range(0, _imposterDatabase.passports.Count)];
+        } 
+        while (previous.number == newData.number && previous.fullname == newData.fullname);
+        return newData;
     }
 
-    private string GetImposterTermOfImprisonment()
+    private string GetImposterTermOfImprisonment(string previous)
     {
-        return _imposterPersonsDeteils.termsOfImprisonment[Random.Range(0, _imposterPersonsDeteils.termsOfImprisonment.Length)];
+        string newData = "";
+        do
+        {
+            newData = _imposterPersonsDeteils.termsOfImprisonment[Random.Range(0, _imposterPersonsDeteils.termsOfImprisonment.Length)];
+        }
+        while (newData == previous);
+        return newData;
     }
 
-    private string GetImposterReasonForImprisonment()
+    private string GetImposterReasonForImprisonment(string previous)
     {
-        return _imposterPersonsDeteils.reasonsForImprisonment[Random.Range(0, _imposterPersonsDeteils.reasonsForImprisonment.Length)];
+        string newData = "";
+        do
+        {
+            newData = _imposterPersonsDeteils.reasonsForImprisonment[Random.Range(0, _imposterPersonsDeteils.reasonsForImprisonment.Length)];
+        }
+        while (newData == previous);
+        return newData;
     }
 
-    private string GetImposterDescription()
+    private string GetImposterDescription(string previous)
     {
-        return _imposterPersonsDeteils.descriptions[Random.Range(0, _imposterPersonsDeteils.descriptions.Length)];
+        string newData = "";
+        do
+        {
+            newData = _imposterPersonsDeteils.descriptions[Random.Range(0, _imposterPersonsDeteils.descriptions.Length)];
+        }
+        while (newData == previous);
+        return newData;
     }
-    private string GetImposterReasonForDismissals()
+    private string GetImposterReasonForDismissals(string previous)
     {
-        return _imposterPersonsDeteils.reasonsForDismissal[Random.Range(0, _imposterPersonsDeteils.reasonsForDismissal.Length)];
+        string newData = "";
+        do
+        {
+            newData = _imposterPersonsDeteils.reasonsForDismissal[Random.Range(0, _imposterPersonsDeteils.reasonsForDismissal.Length)];
+        }
+        while (newData == previous);
+        return newData;
     }
 }

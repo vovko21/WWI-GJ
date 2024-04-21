@@ -40,9 +40,9 @@ public class PersonData
         builder.Append(this.fullname);
         builder.Append("\n");
 
-        builder.Append("Дата народження: ");
-        builder.Append(this.birthDate);
-        builder.Append("\n");
+        //builder.Append("Дата народження: ");
+        //builder.Append(this.birthDate);
+        //builder.Append("\n");
 
         builder.Append("Термін ув’язнення: ");
         builder.Append(this.termOfImprisonment);
@@ -61,5 +61,19 @@ public class PersonData
         builder.Append("\n");
 
         return builder.ToString();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (!(obj is PersonData))
+            return false;
+
+        PersonData other = (PersonData)obj;
+        return number == other.number && fullname == other.fullname && birthDate == other.birthDate;
+    }
+
+    public override int GetHashCode()
+    {
+        return number.GetHashCode() ^ fullname.GetHashCode() ^ birthDate.GetHashCode() ^ termOfImprisonment.GetHashCode() ^ reasonForImprisonment.GetHashCode() ^ description.GetHashCode() ^ reasonForDismissal.GetHashCode();
     }
 }

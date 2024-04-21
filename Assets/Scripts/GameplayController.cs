@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEvent>
 {
@@ -10,6 +11,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
     private PersonData _currentPerson;
     private List<PersonData> _errorPersons;
+    private IEnumerator _nextPersonCoroutine;
 
     public PersonData CurrentPerson => _currentPerson;
 
@@ -27,7 +29,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
     {
         _errorPersons = new List<PersonData>();
 
-        StartCoroutine(CallNextPerson());
+        StartNextPersonCoroutine();
     }
 
     public void OnEvent(ButtonClickedEvent eventParams)
@@ -51,7 +53,7 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
             _errorPersons.Add(_currentPerson);
         }
 
-        StartCoroutine(CallNextPerson());
+        StartNextPersonCoroutine();
     }
 
     private void RejectPerson()
@@ -63,15 +65,36 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
             _errorPersons.Add(_currentPerson);
         }
 
-        StartCoroutine(CallNextPerson());
+        StartNextPersonCoroutine();
+    }
+
+    private void StartNextPersonCoroutine()
+    {
+        if(_nextPersonCoroutine != null)
+        {
+            StopCoroutine(_nextPersonCoroutine);
+
+            _nextPersonCoroutine = null;
+        }
+
+        _nextPersonCoroutine = CallNextPerson();
+
+        StartCoroutine(_nextPersonCoroutine);
     }
 
     private IEnumerator CallNextPerson()
     {
-        if(_currentPerson != null)
-        {
-            _currentPerson = DataGenerator.GetPersonData(GameData.Instance.PersonsData, GameData.Instance.ImpostersData);
+        var previousPerson = _currentPerson;
+        _currentPerson = GameData.Instance.GetNextPersonData();
 
+        if (_currentPerson == null)
+        {
+            StartCoroutine(EndGame());
+            yield return null;
+        }
+
+        if (previousPerson != null)
+        {
             _personView.MoveCenterToRight();
 
             yield return new WaitForSeconds(1.2f);
@@ -82,8 +105,6 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
         }
         else
         {
-            _currentPerson = DataGenerator.GetPersonData(GameData.Instance.PersonsData, GameData.Instance.ImpostersData);
-
             _personView.SetPersonSprite(GetCurrentPersonSprite());
 
             yield return new WaitForSeconds(1f);
@@ -97,5 +118,12 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
     private Sprite GetCurrentPersonSprite()
     {
         return _ImagesId.FirstOrDefault(x => x.PassportId == _currentPerson.number).Sprite;
+    }
+
+    private IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene("MainMenu");
     }
 }
