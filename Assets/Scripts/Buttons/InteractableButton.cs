@@ -7,10 +7,13 @@ public struct ButtonClickedEvent
 
 public class InteractableButton : MonoBehaviour, IInteractable
 {
+    public AudioSource audioSource;
+
     [SerializeField] private bool _isPositive;
     Animator animator;
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = this.GetComponent<Animator>();
     }
 
@@ -19,5 +22,7 @@ public class InteractableButton : MonoBehaviour, IInteractable
         EventManager.TriggerEvent(new ButtonClickedEvent() { isPositive = _isPositive });
 
         animator.SetTrigger("Press");
+    
+        audioSource.Play();
     }
 }

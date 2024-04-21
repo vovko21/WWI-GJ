@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Image5
   m_EditorClassIdentifier: 
   <PassportId>k__BackingField: 5
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 11c7134fbc5a1044f953c77af04ea5e7,
+    type: 3}
