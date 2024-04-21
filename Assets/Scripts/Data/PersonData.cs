@@ -32,11 +32,11 @@ public class PersonData
     {
         StringBuilder builder = new StringBuilder();
 
-        builder.Append("ID: ");
+        builder.Append("<b>ID: </b>");
         builder.Append(this.number);
         builder.Append("\n");
 
-        builder.Append("Ім'я: ");
+        builder.Append("<b>Ім'я: </b>");
         builder.Append(this.fullname);
         builder.Append("\n");
 
@@ -44,19 +44,19 @@ public class PersonData
         //builder.Append(this.birthDate);
         //builder.Append("\n");
 
-        builder.Append("Термін ув’язнення: ");
+        builder.Append("<b>Термін ув’язнення: </b>");
         builder.Append(this.termOfImprisonment);
         builder.Append("\n");
 
-        builder.Append("Причина ув’язнення: ");
+        builder.Append("<b>Причина ув’язнення: </b>");
         builder.Append(this.reasonForImprisonment);
         builder.Append("\n");
 
-        builder.Append("Опис: ");
+        builder.Append("<b>Опис: </b>");
         builder.Append(this.description);
         builder.Append("\n");
 
-        builder.Append("Причина звільнення: ");
+        builder.Append("<b>Причина звільнення: </b>");
         builder.Append(this.reasonForDismissal);
         builder.Append("\n");
 
