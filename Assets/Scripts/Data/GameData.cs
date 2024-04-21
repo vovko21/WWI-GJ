@@ -32,9 +32,9 @@ public class GameData : SingletonMonobehaviour<GameData>
 
     public bool IsImposter(PersonData person)
     {
-        var imposter = ImpostersData.FirstOrDefault(x => x == person);
+        var imposter = ImpostersData.FirstOrDefault(x => x.Equals(person));
 
-        if(imposter != null)
+        if(imposter == null)
         {
             return false;
         }
@@ -58,24 +58,16 @@ public class GameData : SingletonMonobehaviour<GameData>
         {
             //good person
             person = nonVisitedPersons[Random.Range(0, nonVisitedPersons.Count)];
+
+            _attendetPersons[person] = true;
         }
         else
         {
             //imposter
-            for (int i = 0; i < _completePersons.Count; i++)
-            {
-                if (i == pick)
-                {
-                    person = _completePersons[nonVisitedPersons[i]];
-                }
-            }
-        }
+            int randomIndex = Random.Range(0, nonVisitedPersons.Count);
+            person = _completePersons[nonVisitedPersons[randomIndex]];
 
-        _attendetPersons[person] = true;
-
-        if (_attendetPersons.All(x => x.Value == true))
-        {
-            var A = "";
+            _attendetPersons[nonVisitedPersons[randomIndex]] = true;
         }
 
         return person;

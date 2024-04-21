@@ -26,15 +26,5 @@ public class SceneEntryPoint : MonoBehaviour
 
         _computerUI.Initialize();
         _gameplayController.Initialize();
-
-        foreach (var item in generatedPersons)
-        {
-            Debug.Log(item.ToString());
-        }
-        Debug.Log("==========");
-        foreach (var item in impostersGeneratedPersons)
-        {
-            Debug.Log(item.ToString());
-        }
     }
 }

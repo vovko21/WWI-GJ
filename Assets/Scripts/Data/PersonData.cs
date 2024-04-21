@@ -69,7 +69,8 @@ public class PersonData
             return false;
 
         PersonData other = (PersonData)obj;
-        return number == other.number && fullname == other.fullname && birthDate == other.birthDate;
+        return number == other.number && fullname == other.fullname && birthDate == other.birthDate && termOfImprisonment == other.termOfImprisonment 
+            && reasonForImprisonment == other.reasonForImprisonment && description == other.description && reasonForDismissal == other.reasonForDismissal;
     }
 
     public override int GetHashCode()

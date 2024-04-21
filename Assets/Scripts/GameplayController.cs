@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEvent>
 {
     [SerializeField] private PersonView _personView;
+    [SerializeField] private EndScreenUI _endScreenUI;
     [SerializeField] private List<ImageSO> _ImagesId;
 
     private PersonData _currentPerson;
@@ -36,10 +37,12 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
     {
         if (eventParams.isPositive)
         {
+            Debug.Log("<ACCEPT");
             AcceptPerson();
         }
         else
         {
+            Debug.Log("REJECT");
             RejectPerson();
         }
     }
@@ -50,7 +53,12 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
         if(isImposter)
         {
+            Debug.Log("<color=red>ERROR</color>");
             _errorPersons.Add(_currentPerson);
+        }
+        else
+        {
+            Debug.Log("<color=green>RIGHT</color>");
         }
 
         StartNextPersonCoroutine();
@@ -62,7 +70,12 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
         if (!isImposter)
         {
+            Debug.Log("<color=red>ERROR</color>");
             _errorPersons.Add(_currentPerson);
+        }
+        else
+        {
+            Debug.Log("<color=green>RIGHT</color>");
         }
 
         StartNextPersonCoroutine();
@@ -122,7 +135,9 @@ public class GameplayController : MonoBehaviour, IEventListener<ButtonClickedEve
 
     private IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(1f);
+        _endScreenUI.Initialize(_errorPersons);
+
+        yield return new WaitForSeconds(15f);
 
         SceneManager.LoadScene("MainMenu");
     }
