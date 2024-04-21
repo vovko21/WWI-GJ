@@ -31,8 +31,8 @@ public class ComputerUI : MonoBehaviour
         }
     }
 
-    private void PersonItemUI_OnClicked(PersonData person, string text)
+    private void PersonItemUI_OnClicked(PersonData person)
     {
-        _deteilsText.text = text;
+        _deteilsText.text = person.ToString();
     }
 }

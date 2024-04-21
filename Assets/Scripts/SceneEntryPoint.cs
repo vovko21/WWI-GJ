@@ -23,8 +23,7 @@ public class SceneEntryPoint : MonoBehaviour
 
         GameData.Instance.Initialize(generatedPersons, impostersGeneratedPersons);
 
-        _gameplayController.Initialize();
-
         _computerUI.Initialize();
+        _gameplayController.Initialize();
     }
 }
